@@ -38,6 +38,12 @@ enter_username.send_keys(ACCOUNT_EMAIL)
 enter_password = driver.find_element(By.ID,value= "password")
 enter_password.send_keys(ACCOUNT_PASSWORD)
 
+# click sign in to sign-in
+time.sleep(4)
+
+click_sign_in = driver.find_element(By.XPATH,value= '//*[@id="organic-div"]/form/div[4]/button')
+click_sign_in.click()
+
 
 
 # quit
