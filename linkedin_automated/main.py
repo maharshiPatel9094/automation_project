@@ -39,12 +39,19 @@ enter_password = driver.find_element(By.ID,value= "password")
 enter_password.send_keys(ACCOUNT_PASSWORD)
 
 # click sign in to sign-in
-time.sleep(4)
+time.sleep(3)
 
 click_sign_in = driver.find_element(By.XPATH,value= '//*[@id="organic-div"]/form/div[4]/button')
 click_sign_in.click()
 
+# search for job
+time.sleep(3)
+search_job = driver.find_element(By.XPATH,value= '//*[@id="global-nav-typeahead"]/input')
+search_job.send_keys("python developer",Keys.ENTER)
 
-
+#click for the easy apply jobs button 
+time.sleep(3)
+easy_apply_button = driver.find_element(By.XPATH,value='//*[@id="Hv6WN1XDStSjdr4apRUorQ=="]/div/ul[2]/li[1]/div/div/div/div[2]/div[1]/div[1]/div/span/span/a')
+easy_apply_button.click()
 # quit
 # driver.quit()
