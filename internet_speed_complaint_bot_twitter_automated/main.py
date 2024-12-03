@@ -46,14 +46,55 @@ class InternetSpeedTwitterBot:
         print(self.up)
         print(self.down)
     
-    def tweet_at_provider():
+    def tweet_at_provider(self):
         '''This function tweet at provider.'''
-        pass
+        self.driver.get(TWITTER_URL)
+        
+        # 
+        sleep(5)
+        self.cross_button = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[1]/div/div/div/div/div[1]/button')
+        self.cross_button.click()
 
+        sleep(3)
+        self.cookie_cross_button = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div/div[1]/div/div/div/button')
+        self.cookie_cross_button.click()
 
+        sleep(3)
+        self.sign_in_button = self.driver.find_element(By.LINK_TEXT,value="Sign in")
+        self.sign_in_button.click()
+        
+        sleep(3)
+        self.email_text = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[4]/label/div/div[2]/div/input')
+        self.email_text.send_keys(my_email)
+        
+        sleep(3)
+        self.next_button = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/button[2]/div')
+        self.next_button.click() 
+        
+        sleep(3)
+        self.password_text = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
+        self.password_text.send_keys(my_password)
+        
+        sleep(3)
+        self.login_button = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/button/div')
+        self.login_button.click()
+        
+        sleep(3)
+        self.draft_post_button = self.driver.find_element(By.XPATH,value='//*[@id="react-root"]/div/div/div[2]/header/div/div/div/div[1]/div[3]/a/div')
+        self.draft_post_button.click()
+        
+        sleep(3)
+        tweet = f"Hey Internet Provider, why is my internet speed {self.down}down/{self.up}up when I pay for {promised_down}down/{promised_up}up?"
+        self.tweet_message = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div/div/div/div[1]/div[2]/div/div/div/div/div/div/div/div/div/div/div/div/div[1]/div/div/div/div/div/div[2]/div/div/div/div')
+        self.tweet_message.send_keys(tweet)
+        
+        sleep(3)
+        self.send_post_button = self.driver.find_element(By.XPATH,value='//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div/div[3]/div[2]/div[1]/div/div/div/div[2]/div[2]/div/div/div/button/div/span/span')
+        self.send_post_button.click()
+        
 # initialize the object 
 internet_bot  = InternetSpeedTwitterBot()
-internet_bot.get_internet_speed()
+# internet_bot.get_internet_speed()
 internet_bot.tweet_at_provider()
 
 
