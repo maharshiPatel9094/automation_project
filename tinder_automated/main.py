@@ -14,6 +14,7 @@ load_dotenv()
 # get env var
 my_email = os.getenv("MY_EMAIL")
 my_password = os.getenv("MY_PASSWORD")
+my_number = os.getenv("MY_NUMBER")
 
 # chrome options
 chrome_options = webdriver.ChromeOptions()
@@ -33,22 +34,32 @@ def handle_cookies():
     except Exception as error:
         print("No cookie consent popup found or already handled.", error)
 
-# # login button click
-# time.sleep(3)
-# login_button = driver.find_element(By.LINK_TEXT, value="Log in")
-# login_button.click()
-# time.sleep(5)
-# handle_cookies()
-# time.sleep(6)
-# fb_login = driver.find_element(By.XPATH, value='//*[@id="modal-manager"]/div/div/div[1]/div/div[3]/span/div[2]/button')
-# fb_login.click()
-# # driver.quit()
-
 time.sleep(3)
 handle_cookies()
 time.sleep(3)
+
+# make the create account button click
 button_click = driver.find_element(By.XPATH,value='//*[@id="main-content"]/div/div[2]/button/div[2]/div[2]/div')
 button_click.click()
+
+# click the facebook login page 
 time.sleep(3)
 fb_login = driver.find_element(By.XPATH,value='//*[@id="q-920667245"]/div/div/div/div[1]/div/div/div[2]/div[2]/span/div[2]/button/div[2]/div[2]/div[2]/div/div')
 fb_login.click()
+
+#handle the second window  
+base_window = driver.window_handles[0]
+fb_login_window = driver.window_handles[1]
+driver.switch_to.window(fb_login_window)
+print(driver.title) #should print the title Facebook
+
+#Login and hit enter
+email = driver.find_element(By.XPATH, value='//*[@id="email"]')
+password = driver.find_element(By.XPATH, value='//*[@id="pass"]')
+email.send_keys(my_number)
+password.send_keys(my_password)
+password.send_keys(Keys.ENTER)
+
+#switch back to the base window
+driver.switch_to.window(base_window)
+print(driver.title)
