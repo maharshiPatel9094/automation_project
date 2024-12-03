@@ -94,7 +94,7 @@ class InternetSpeedTwitterBot:
         
 # initialize the object 
 internet_bot  = InternetSpeedTwitterBot()
-# internet_bot.get_internet_speed()
+internet_bot.get_internet_speed()
 internet_bot.tweet_at_provider()
 
 
