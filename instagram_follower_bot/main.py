@@ -3,6 +3,7 @@ from time import sleep
 from dotenv import load_dotenv
 from selenium import webdriver 
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
 # urls
@@ -15,6 +16,7 @@ load_dotenv()
 my_email = os.getenv("MY_EMAIL")
 my_password = os.getenv("MY_PASSWORD")
 my_username = os.getenv("USERNAME")
+SIMILAR_ACCOUNT = "chefsplate"
 
 class InstaFollower:
     def __init__(self):
@@ -40,8 +42,28 @@ class InstaFollower:
         self.cookie_handle = self.driver.find_element(By.XPATH,value="//div[contains(text(), 'Not now')]")
         self.cookie_handle.click()
         
-    def find_followers():
-        pass
+    def find_followers(self):
+        sleep(5)
+        self.driver.get(f"https://www.instagram.com/{SIMILAR_ACCOUNT}/followers")
+        
+        # followers button
+        sleep(3)
+        self.followers_button = self.driver.find_element(By.CSS_SELECTOR,value=f'ul li div a[href="/{SIMILAR_ACCOUNT}/followers/"]')
+        self.followers_button.click()
+        
+        # follower list
+        sleep(3)
+        # choose the path that makes scrolling bar green
+        modal_xpath = ""
+        modal = self.driver.find_element(by=By.XPATH, value=modal_xpath)
+        for _ in range(10):
+            # In this case we're executing some Javascript, that's what the execute_script() method does.
+            # The method can accept the script as well as an HTML element.
+            # The modal in this case, becomes the arguments[0] in the script.
+            # Then we're using Javascript to say: "scroll the top of the modal (popup) element by the height of the modal (popup)"
+            self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", modal)
+            sleep(2)
+        
     
     def follow():
         pass
