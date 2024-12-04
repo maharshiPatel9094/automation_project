@@ -3,7 +3,7 @@ from time import sleep
 from dotenv import load_dotenv
 from selenium import webdriver 
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.keys import Keys
 
 # urls
@@ -50,23 +50,33 @@ class InstaFollower:
         sleep(3)
         self.followers_button = self.driver.find_element(By.CSS_SELECTOR,value=f'ul li div a[href="/{SIMILAR_ACCOUNT}/followers/"]')
         self.followers_button.click()
-        
-        # follower list
-        sleep(3)
-        # choose the path that makes scrolling bar green
-        modal_xpath = ""
-        modal = self.driver.find_element(by=By.XPATH, value=modal_xpath)
-        for _ in range(10):
-            # In this case we're executing some Javascript, that's what the execute_script() method does.
-            # The method can accept the script as well as an HTML element.
-            # The modal in this case, becomes the arguments[0] in the script.
-            # Then we're using Javascript to say: "scroll the top of the modal (popup) element by the height of the modal (popup)"
-            self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", modal)
-            sleep(2)
-        
+        # choose the path that makes scrolling bar green 
     
-    def follow():
-        pass
+    def follow(self):
+        sleep(3)
+        
+        # Locate all "Follow" buttons using the XPath
+        follow_buttons = self.driver.find_elements(By.XPATH, value='/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/div/button')
+        
+        for button in follow_buttons:
+            try:
+                # Click the "Follow" button
+                button.click()
+                print("Clicked a follow button.")
+                sleep(2)  # Small delay to mimic human interaction
+                
+                # Handle the cookie policy popup after each button click
+                try:
+                    cookie_policy_button = self.driver.find_element(By.XPATH, value='/html/body/div[6]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[2]/button[2]')
+                    cookie_policy_button.click()
+                    print("Cookie policy button clicked.")
+                    sleep(1)  # Short delay to ensure the next action can proceed smoothly
+                except Exception as e:
+                    print(f"Cookie policy popup not found after clicking button: {e}")
+            except Exception as e:
+                print(f"Error clicking a follow button: {e}")
+
+            
     
     
     
